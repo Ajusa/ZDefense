@@ -33,7 +33,10 @@ function loop(){
         to ctx functions
     */
 
-    setTimeout(loop, 1000/30); //For 30 fps
+   // setTimeout(loop, 1000/30); //For 30 fps - not gonna work bruh
+   setTimeout(loop,33);
 }
 
-// *so I have this book about animating in HTML
+// *so I have this book about animating in HTML and it talks about how setTimeout() is a horrible
+//  way to animate, I could read a bit further so we have a better way to animate it that would work
+//  on all computers the same if it turns out to be important
