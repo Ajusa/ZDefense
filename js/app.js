@@ -39,4 +39,5 @@ function loop(){
 
 // *so I have this book about animating in HTML and it talks about how setTimeout() is a horrible
 //  way to animate, I could read a bit further so we have a better way to animate it that would work
-//  on all computers the same if it turns out to be important
+//  on all computers the same if it turns out to be important.
+//  Arham - Sure, I think that a constant framerte would help performance as well.
