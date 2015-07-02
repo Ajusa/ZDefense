@@ -9,12 +9,16 @@ function zombie(xval, yval, health, speed) {
     this.speed = speed;
     //Gives it speed
     ctx.drawImage(zombieImg, xval, yval)
-    //Draws it into the canvas
+        //Draws it into the canvas
     this.update = function(self, arrow) {
-    	if(isCollide(self, arrow)){
-    		self.takeDamage(arrow.damage);
-    		//Checks if an arrow is hitting the zombie. If it is, then take damage.
-    	}
+        for (var i = arrow.length - 1; i >= 0; i--) {
+            if (isCollide(self, arrow[i])) {
+                self.takeDamage(arrow.damage);
+                //Checks if any arrows are hitting the zombie. If it is, then take damage.
+                arrow.splice(i,1)
+                //Goes ahead an removes that arrow
+            }
+        };
         if (self.health < 1) {
             //Do nothing, cause you dead brah. You no exist
             self.x = 6000; //GO AWAY!
@@ -27,6 +31,6 @@ function zombie(xval, yval, health, speed) {
 
     }
     this.takeDamage = function(self, damage) {
-    	self.health -= damage;
+        self.health -= damage;
     }
 }
