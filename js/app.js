@@ -11,7 +11,8 @@
 var VERSION;
 var HEIGHT;
 var WIDTH;
-
+var Arrows[];
+var Zombies[];
 function init(){
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
