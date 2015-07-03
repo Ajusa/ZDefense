@@ -1,4 +1,4 @@
-function arrow(damage, xval, yval, speed) {
+function Arrow(damage, xval, yval, speed) {
     this.damage = damage;
     this.x = xval;
     this.y = yval;
@@ -9,12 +9,11 @@ function arrow(damage, xval, yval, speed) {
             if (isCollide(self, zombie[i])) {
                 //Do nothing, stops drawing the arrow
                 zombie.splice[i, 1];
-                self.x = 5000; //Stops the arrow from "existing" and interfering with the game
+                self.x = WIDTH+1;
             } else {
                 self.x += speed;
                 ctx.drawImage(arrowImg, self.x, self.y);
             }
         }
-
     }
 }
