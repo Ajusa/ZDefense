@@ -21,8 +21,8 @@ var canvas = document.createElement('canvas'),
     container = document.createElement('div');
 
 var VERSION,
-    HEIGHT = 800,
-    WIDTH = 600,
+    WIDTH = 800,
+    HEIGHT = 600,
     Arrows = [],
     Zombies = [],
     screens = [true,false,false];
@@ -32,6 +32,7 @@ function init(){
     window.addEventListener("keydown",onKeyDown);
     window.addEventListener("keyup",onKeyUp);
 
+    document.body.appendChild(container);
     container.appendChild(canvas);
     canvas.style.cssText = "border: 1px solid black; width: "+WIDTH+"px; height: "+HEIGHT+"px;";
     container.style.cssText = "text-align: center;";
@@ -44,6 +45,7 @@ function loop(){
         if(screens[0]){         //Title screen
             ctx.clearRect(0,0,WIDTH,HEIGHT);
             ctx.fillStyle = "#000";
+            ctx.fillRect(0,0,100,100);
         }
         else if(screens[1]){    //Main game
 
