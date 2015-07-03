@@ -8,37 +8,62 @@
         Learn from each other
 */
 
-var VERSION;
-var HEIGHT;
-var WIDTH;
-var Arrows[];
-var Zombies[];
+
+//  Jackson - Looking at the console during runs, it seems 
+//  that variables in this file cannot reference variables
+//  from index.html. I changed it to "document.createElement"
+//  to make it a bit easier.
+
+//  UPDATE: I have no idea how to reference outside HTML objects from Javascript
+
+var canvas = document.createElement('canvas'),
+    ctx = canvas.getContext('2d'),
+    container = document.createElement('div');
+
+var VERSION,
+    HEIGHT = 800,
+    WIDTH = 600,
+    Arrows = [],
+    Zombies = [],
+    screens = [true,false,false];
+
 function init(){
-    var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
+    //Event listeners
+    window.addEventListener("keydown",onKeyDown);
+    window.addEventListener("keyup",onKeyUp);
+
+    container.appendChild(canvas);
+    canvas.style.cssText = "border: 1px solid black; width: "+WIDTH+"px; height: "+HEIGHT+"px;";
+    container.style.cssText = "text-align: center;";
     
     loop();
-//I am so pro
-//#legyt
 }
 
 function loop(){
-    //ctx.save() and ctx.restore() are basically how you animate canvases...*
-    ctx.save();
-        //Drawing code; Javascript equivelant of paint() and repaint()
-    ctx.restore();
-    /*  Anything outside of ctx.restore() is for
-        updating variables, anything not related
-        to ctx functions
-    */
+    setInterval(function(){
+        if(screens[0]){         //Title screen
+            ctx.clearRect(0,0,WIDTH,HEIGHT);
+            ctx.fillStyle = "#000";
+        }
+        else if(screens[1]){    //Main game
 
-   // setTimeout(loop, 1000/30); //For 30 fps - not gonna work bruh
-   setTimeout(loop,33);
+        }
+        else if(screens[2]){    //Game over
+
+        }
+        else{
+            screens[0] = true;  //If it breaks, send ya to the title screen
+        }
+    },30);
 }
 
-// *so I have this book about animating in HTML and it talks about how setTimeout() is a horrible
-//  way to animate, I could read a bit further so we have a better way to animate it that would work
-//  on all computers the same if it turns out to be important.
-//  Arham - Sure, I think that a constant framerte would help performance as well.
+function onKeyDown(key) {
+    var keyCode = key.keyCode;
+    console.log(keyCode);
+    if(keyCode == 32) //Spacebar, FYI
+        console.log("Ajusa sucks >:D");
+}
+
+function onKeyUp(key) {
+    var keyCode = key.keyCode;
+}
