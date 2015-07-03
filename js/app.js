@@ -43,9 +43,8 @@ function init(){
 function loop(){
     setInterval(function(){
         if(screens[0]){         //Title screen
-            ctx.clearRect(0,0,WIDTH,HEIGHT);
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0,0,100,100);
+            zombie1 = new Zombie(50,50, 100,50);
+            zombie1.update(zombie1, Arrow);
         }
         else if(screens[1]){    //Main game
 

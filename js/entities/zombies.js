@@ -14,7 +14,8 @@ function Zombie(xval, yval, health, speed) {
             if (isCollide(self, arrow[i])) {
 
                 //Doesn't using 'this' instead of self work just as well? You're still referencing the new Zombie object
-                self.takeDamage(arrow.damage);
+                self.takeDamage(arrow[i].damage);
+                console.log(this)
                 //Checks if any arrows are hitting the zombie. If it is, then take damage.
                 arrow.splice(i,1)
                 //Goes ahead an removes that arrow
@@ -22,10 +23,12 @@ function Zombie(xval, yval, health, speed) {
         };
         if (self.health < 1) {
             //Do nothing, cause you dead brah. You no exist
+            return false;
             self.x = WIDTH+1;
         } else {
             self.x -= self.speed;
             ctx.drawImage(zombieImg, self.x, self.y);
+            return true;
         }
     }
 
@@ -36,5 +39,5 @@ function Zombie(xval, yval, health, speed) {
 
 //  Overloaded the function to make coding it a bit looser, hope ya don't mind ;)
 function Zombie(xval, yval) {
-    zombie(xval,yval,DEFAULT_HEALTH,DEFAULT_SPEED);
+    Zombie(xval,yval,DEFAULT_HEALTH,DEFAULT_SPEED);
 }
