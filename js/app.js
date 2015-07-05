@@ -8,24 +8,23 @@
         Learn from each other
 */
 
-
-//  Jackson - Looking at the console during runs, it seems 
-//  that variables in this file cannot reference variables
-//  from index.html. I changed it to "document.createElement"
-//  to make it a bit easier.
-
-//  UPDATE: I have no idea how to reference outside HTML objects from Javascript
-
 var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
     container = document.createElement('div');
+    requestAnimationFrame = window.requestAnimationFrame ||
+                            window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.msRequestAnimationFrame;
 
 var VERSION,
     WIDTH = 800,
     HEIGHT = 600,
-    Arrows = [],
-    Zombies = [],
+    Arrows = [new Arrow(5,100,100,.2)],
+    Zombies = [new Zombie(500,500,10,1)],
+
     screens = [true,false,false];
+
+var zombie1;
 
 function init(){
     //Event listeners
@@ -36,34 +35,39 @@ function init(){
     container.appendChild(canvas);
     canvas.style.cssText = "border: 1px solid black; width: "+WIDTH+"px; height: "+HEIGHT+"px;";
     container.style.cssText = "text-align: center;";
-    
-    loop();
+
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+    requestAnimationFrame(gameLoop);
 }
 
-function loop(){
-    setInterval(function(){
-        if(screens[0]){         //Title screen
-            ctx.clearRect(0,0,WIDTH,HEIGHT);
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0,0,100,100);
-        }
-        else if(screens[1]){    //Main game
+function gameLoop(){
+    ctx.clearRect(0,0,WIDTH,HEIGHT);
+    if(screens[0]){         //Title screen
+        for(var i=0; i<Arrows.length; i++)
+            Arrows[i].update(Zombies);
+        for(var j=0; j<Zombies.length; j++)
+            Zombies[j].update(Arrows);
 
-        }
-        else if(screens[2]){    //Game over
+    }
+    else if(screens[1]){    //Main game
 
-        }
-        else{
-            screens[0] = true;  //If it breaks, send ya to the title screen
-        }
-    },30);
+    }
+    else if(screens[2]){    //Game over
+
+    }
+    else{
+        screens[0] = true;  //If it breaks, send ya to the title screen
+    }
+    requestAnimationFrame(gameLoop);
 }
 
 function onKeyDown(key) {
     var keyCode = key.keyCode;
     console.log(keyCode);
-    if(keyCode == 32) //Spacebar, FYI
-        console.log("Ajusa sucks >:D");
+    if (keyCode == 32)
+        Arrows.push(new Arrow(5,100,100,1));
 }
 
 function onKeyUp(key) {

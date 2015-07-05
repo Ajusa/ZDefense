@@ -3,16 +3,20 @@ function Arrow(damage, xval, yval, speed) {
     this.x = xval;
     this.y = yval;
     this.speed = speed;
-    ctx.drawImage(arrowImg, xval, yval);
-    this.update = function(zombie, self) {
+
+    //ctx.drawImage(arrowImg, xval, yval);
+    this.update = function(zombie) {
         for (var i = zombie.length - 1; i >= 0; i--) {
-            if (isCollide(self, zombie[i])) {
+
+            if (isCollide(this, zombie[i])) {
                 //Do nothing, stops drawing the arrow
+                console.log("Arrow has collided with "+zombie[i]+" (from arrows.js)");
                 zombie.splice[i, 1];
-                self.x = WIDTH+1;
+                this.x = WIDTH+1;
             } else {
-                self.x += speed;
-                ctx.drawImage(arrowImg, self.x, self.y);
+                //ctx.drawImage(arrowImg, this.x, this.y);
+                this.x += this.speed;
+                ctx.fillRect(this.x,this.y,100,20);
             }
         }
     }

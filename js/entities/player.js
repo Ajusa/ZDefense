@@ -26,5 +26,4 @@ function Player(xval, yval) {
         screens[1] = false;
         screens[2] = true;
     }
-
 }
