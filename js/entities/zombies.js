@@ -4,6 +4,8 @@ function Zombie(xval, yval, health, speed) {
     this.y = yval;
     this.health = health;
     this.speed = speed;
+    this.width = 100;
+    this.height = 100;
     //ctx.drawImage(zombieImg, xval, yval); Add this when we have images
 
     this.update = function(arrow) {
