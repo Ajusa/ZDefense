@@ -17,7 +17,7 @@ function Arrow(damage, xval, yval, speed) {
             } else {
                 //ctx.drawImage(arrowImg, this.x, this.y);
                 this.x += this.speed;
-                ctx.fillRect(this.x,this.y,100,20);
+                ctx.fillRect(this.x,this.y,this.width,this.height);
             }
         }
     }
