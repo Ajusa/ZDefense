@@ -1,19 +1,25 @@
-function Arrow(damage, xval, yval, speed) {
-    this.damage = damage;
+function Arrow(xval, yval, damage, speed) {
     this.x = xval;
     this.y = yval;
+    this.damage = damage;
     this.speed = speed;
-    ctx.drawImage(arrowImg, xval, yval);
-    this.update = function(zombie, self) {
-        for (var i = zombie.length - 1; i >= 0; i--) {
-            if (isCollide(self, zombie[i])) {
-                //Do nothing, stops drawing the arrow
-                zombie.splice[i, 1];
-                self.x = WIDTH+1;
+    this.width = 70;
+    this.height = 20;
+    //ctx.drawImage(arrowImg,  xval, yval);
+    this.update = function() {
+        for (var i = Zombies.length - 1; i >= 0; i--) {
+
+            if (isCollide(this, Zombies[i])) {
+                this.kill(i);
             } else {
-                self.x += speed;
-                ctx.drawImage(arrowImg, self.x, self.y);
+                //ctx.drawImage(arrowImg, this.x, this.y);
+                this.x += this.speed;
+                ctx.fillStyle = "#000"
+                ctx.fillRect(this.x, this.y, this.width, this.height);
             }
         }
+    }
+    this.kill = function(i) {
+        Arrows.splice(i, 1);
     }
 }

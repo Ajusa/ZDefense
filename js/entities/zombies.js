@@ -1,40 +1,36 @@
-var DEFAULT_HEALTH,
-    DEFAULT_SPEED;
-
-function Zombie(xval, yval, health, speed) {
-    //Note that all of those must be given some value on creation
+function Zombie(xval, yval, width, height, health, speed, damage) {
     this.x = xval;
     this.y = yval;
+    this.width = width;
+    this.height = height;
     this.health = health;
     this.speed = speed;
-    ctx.drawImage(zombieImg, xval, yval);
+    this.damage = damage;
+    //ctx.drawImage(zombieImg, xval, yval); Add this when we have images
+    this.update = function() {
+        for (var i = Arrows.length - 1; i >= 0; i--) {
 
-    this.update = function(self, arrow) {
-        for (var i = arrow.length - 1; i >= 0; i--) {
-            if (isCollide(self, arrow[i])) {
-
-                //Doesn't using 'this' instead of self work just as well? You're still referencing the new Zombie object
-                self.takeDamage(arrow.damage);
-                //Checks if any arrows are hitting the zombie. If it is, then take damage.
-                arrow.splice(i,1)
-                //Goes ahead an removes that arrow
+            if (isCollide(this, Arrows[i])) {
+                this.takeDamage(Arrows[i].damage);
             }
-        };
-        if (self.health < 1) {
-            //Do nothing, cause you dead brah. You no exist
-            self.x = WIDTH+1;
-        } else {
-            self.x -= self.speed;
-            ctx.drawImage(zombieImg, self.x, self.y);
+        }
+
+        if (this.health < 1) {
+            this.kill(i);
+            Zombies.push(new Zombie(WIDTH,450,50,100,10,1,5))
+        } 
+        else {
+            this.x -= this.speed;
+            //ctx.drawImage(zombieImg, this.x, this.y); Add this when we have images
+            ctx.fillStyle = "#FF0";
+            ctx.fillRect(this.x,this.y,this.width,this.height);
         }
     }
 
-    this.takeDamage = function(self, damage) {
-        self.health -= damage;
+    this.takeDamage = function(damage) {
+        this.health -= damage;
     }
-}
-
-//  Overloaded the function to make coding it a bit looser, hope ya don't mind ;)
-function Zombie(xval, yval) {
-    zombie(xval,yval,DEFAULT_HEALTH,DEFAULT_SPEED);
+    this.kill = function(i){
+        Zombies.splice(i,1);
+    }
 }
