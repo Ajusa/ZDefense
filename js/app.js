@@ -12,35 +12,37 @@ var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
     container = document.createElement('div'),
     requestAnimationFrame = window.requestAnimationFrame ||
-                            window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame ||
-                            window.msRequestAnimationFrame;
-
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame;
+var delay = 1000;
 var VERSION = "Alpha 0.1",
     WIDTH = 800,
     HEIGHT = 600,
     GROUND = {
         x: 0,
-        y: HEIGHT-50,
+        y: HEIGHT - 50,
         width: WIDTH,
         height: 50
     };
 
 var Arrows = [],
-    Zombies = [new Zombie(WIDTH,450,50,100,10,1,5)],
-    player = new Player(WIDTH/2-25,450,50,100),
-    screens = [true,false,false],
+    Zombies = [new Zombie(WIDTH, 450, 50, 100, 10, 1, 5)],
+    player = new Player(WIDTH / 2 - 25, 450, 50, 100),
+    screens = [true, false, false],
     Damage = 1,
     Speed = 4;
 
-function init(){
+function init() {
     //Event listeners
-    window.addEventListener("keydown",onKeyDown);
-    window.addEventListener("keyup",onKeyUp);
-
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    window.setInterval(function() {
+        player.inShot = false;
+    }, delay);
     document.body.appendChild(container);
     container.appendChild(canvas);
-    canvas.style.cssText = "border: 1px solid black; width: "+WIDTH+"px; height: "+HEIGHT+"px;";
+    canvas.style.cssText = "border: 1px solid black; width: " + WIDTH + "px; height: " + HEIGHT + "px;";
     container.style.cssText = "text-align: center;";
 
     canvas.width = WIDTH;
@@ -49,43 +51,39 @@ function init(){
     requestAnimationFrame(gameLoop);
 }
 
-function gameLoop(){
-    ctx.clearRect(0,0,WIDTH,HEIGHT);
+function gameLoop() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
     if (screens[0]) {
         ctx.fillStyle = "#000";
-        ctx.fillRect(0,0,WIDTH,HEIGHT);
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
         ctx.font = "70px LCD";
         ctx.fillStyle = "#FFF";
-        ctx.fillText("ZDefense",150,200);
+        ctx.fillText("ZDefense", 150, 200);
 
         ctx.fillStyle = "#F00";
-        ctx.fillText("2",575,200);
+        ctx.fillText("2", 575, 200);
 
         ctx.font = "30px LCD";
         ctx.fillStyle = "#FFF";
-        ctx.fillText("[Enter to start]",260,400);
+        ctx.fillText("[Enter to start]", 260, 400);
 
         ctx.font = "15px LCD";
-        ctx.fillText(VERSION,10,20);
-    }
-
-    else if (screens[1]) {
+        ctx.fillText(VERSION, 10, 20);
+    } else if (screens[1]) {
         ctx.fillStyle = "#777";
-        ctx.fillRect(0,0,WIDTH,HEIGHT);
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-        for(var i=0; i<Arrows.length; i++)
+        for (var i = 0; i < Arrows.length; i++)
             Arrows[i].update();
-        for(var j=0; j<Zombies.length; j++)
+        for (var j = 0; j < Zombies.length; j++)
             Zombies[j].update();
 
         player.update();
         ctx.fillStyle = "#0FF";
-        ctx.fillRect(GROUND.x,GROUND.y,GROUND.width,GROUND.height);
-    }
-
-    else if (screens[2]) {
+        ctx.fillRect(GROUND.x, GROUND.y, GROUND.width, GROUND.height);
+    } else if (screens[2]) {
 
     }
 
@@ -96,7 +94,7 @@ function onKeyDown(key) {
     var keyCode = key.keyCode;
     console.log(keyCode);
     if (screens[0]) {
-        if(keyCode == 13) {
+        if (keyCode == 13) {
             screens[0] = false;
             screens[1] = true;
         }
@@ -104,8 +102,11 @@ function onKeyDown(key) {
 
     if (screens[1]) {
         if (keyCode == 32 && !player.inShot) {
-            player.inShot = true;
             player.shoot();
+            player.inShot = true;
+            delay -= 100;
+            console.log("Shot" + delay)
+
         }
         if (keyCode == 37 || keyCode == 65) {
             player.dx = -5;
@@ -119,8 +120,7 @@ function onKeyDown(key) {
 function onKeyUp(key) {
     var keyCode = key.keyCode;
     if (screens[1]) {
-        if (keyCode == 32)
-            player.inShot = false;
+
 
         if (keyCode == 37 || keyCode == 39 || keyCode == 65 || keyCode == 68) {
             player.dx = 0;

@@ -13,7 +13,7 @@ function Player(xval, yval, width, height) {
 
     this.update = function() {
         for (var i = Zombies.length - 1; i >= 0; i--) {
-            if(isCollide(this,Zombies[i])){
+            if (isCollide(this, Zombies[i])) {
                 this.takeDamage(Zombies[i].damage);
                 Zombies[i].kill(i);
             }
@@ -21,22 +21,20 @@ function Player(xval, yval, width, height) {
 
         if (this.health < 1) {
             this.die();
-        }
-        else {
+        } else {
             ctx.fillStyle = "#F00";
-            ctx.fillRect(this.x,this.y,this.width,this.height);
+            ctx.fillRect(this.x, this.y, this.width, this.height);
             this.x += this.dx;
             this.y += this.dy;
         }
     }
 
     this.shoot = function() {
-        if(Math.random() >= .5)
-            Arrows.push(new Arrow(this.x+this.width, this.y+this.height/2 + 10*Math.random(), Damage, Speed));
+        if (Math.random() >= .5)
+            Arrows.push(new Arrow(this.x + this.width, this.y + this.height / 2 + 10 * Math.random(), Damage, Speed));
         else
-            Arrows.push(new Arrow(this.x+this.width, this.y+this.height/2 - 10*Math.random(), Damage, Speed));
+            Arrows.push(new Arrow(this.x + this.width, this.y + this.height / 2 - 10 * Math.random(), Damage, Speed));
     }
-
     this.takeDamage = function(damage) {
         this.health -= damage;
     }
