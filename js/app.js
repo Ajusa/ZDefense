@@ -12,9 +12,10 @@ var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
     container = document.createElement('div'),
     requestAnimationFrame = window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame;
+                            window.mozRequestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.msRequestAnimationFrame;
+    
 var delay = 1000;
 var VERSION = "Alpha 0.1",
     WIDTH = 800,
@@ -37,9 +38,7 @@ function init() {
     //Event listeners
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
-    window.setInterval(function() {
-        player.inShot = false;
-    }, delay);
+
     document.body.appendChild(container);
     container.appendChild(canvas);
     canvas.style.cssText = "border: 1px solid black; width: " + WIDTH + "px; height: " + HEIGHT + "px;";
@@ -81,6 +80,7 @@ function gameLoop() {
             Zombies[j].update();
 
         player.update();
+
         ctx.fillStyle = "#0FF";
         ctx.fillRect(GROUND.x, GROUND.y, GROUND.width, GROUND.height);
     } else if (screens[2]) {
