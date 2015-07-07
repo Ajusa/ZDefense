@@ -3,9 +3,6 @@ ZDefense
 It is a game.
 With zombies.
 What more could you want?
-Commands for committing
-git pull origin master
-git add --all
 #TODO
 ##Add Canvas
 ##Make Zombies a Class

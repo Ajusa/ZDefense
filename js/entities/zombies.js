@@ -1,34 +1,29 @@
-function Zombie(xval, yval, health, speed) {
-    //Note that all of those must be given some value on creation
+function Zombie(xval, yval, width, height, health, speed, damage) {
     this.x = xval;
     this.y = yval;
+    this.width = width;
+    this.height = height;
     this.health = health;
     this.speed = speed;
-    this.width = 100;
-    this.height = 100;
+    this.damage = damage;
     //ctx.drawImage(zombieImg, xval, yval); Add this when we have images
+    this.update = function() {
+        for (var i = Arrows.length - 1; i >= 0; i--) {
 
-    this.update = function(arrow) {
-        for (var i = arrow.length - 1; i >= 0; i--) {
-            if (isCollide(this, arrow[i])) {
-
-                //Doesn't using 'this' instead of self work just as well? You're still referencing the new Zombie object
-                this.takeDamage(arrow[i].damage);
-                console.log("Arrow has collided with "+this+" (from zombies.js)");
-                //Checks if any arrows are hitting the zombie. If it is, then take damage.
-                arrow.splice(i,1)
-                //Goes ahead an removes that arrow
+            if (isCollide(this, Arrows[i])) {
+                this.takeDamage(Arrows[i].damage);
+                Arrows.splice(i,1);
             }
-        };
+        }
+
         if (this.health < 1) {
-            //Do nothing, cause you dead brah. You no exist
-            return false;
             this.x = WIDTH+1;
-        } else {
-            this.x -= self.speed;
+        } 
+        else {
+            this.x -= this.speed;
             //ctx.drawImage(zombieImg, this.x, this.y); Add this when we have images
-            ctx.fillRect(this.x,this.y,100,100);
-            return true;
+            ctx.fillStyle = "#FF0";
+            ctx.fillRect(this.x,this.y,this.width,this.height);
         }
     }
 

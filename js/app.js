@@ -10,21 +10,28 @@
 
 var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
-    container = document.createElement('div');
+    container = document.createElement('div'),
     requestAnimationFrame = window.requestAnimationFrame ||
                             window.mozRequestAnimationFrame ||
                             window.webkitRequestAnimationFrame ||
                             window.msRequestAnimationFrame;
 
-var VERSION,
+var VERSION = "Alpha 0.1",
     WIDTH = 800,
     HEIGHT = 600,
-    Arrows = [new Arrow(5,100,100,.2)],
-    Zombies = [new Zombie(500,500,10,1)],
+    GROUND = {
+        x: 0,
+        y: HEIGHT-50,
+        width: WIDTH,
+        height: 50
+    };
 
-    screens = [true,false,false];
-
-var zombie1;
+var Arrows = [],
+    Zombies = [new Zombie(WIDTH,450,50,100,10,1,5)],
+    player = new Player(WIDTH/2-25,450,50,100),
+    screens = [true,false,false],
+    Damage = 1,
+    Speed = 4;
 
 function init(){
     //Event listeners
@@ -44,32 +51,79 @@ function init(){
 
 function gameLoop(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
-    if(screens[0]){         //Title screen
+
+    if (screens[0]) {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0,0,WIDTH,HEIGHT);
+
+        ctx.font = "70px LCD";
+        ctx.fillStyle = "#FFF";
+        ctx.fillText("ZDefense",150,200);
+
+        ctx.fillStyle = "#F00";
+        ctx.fillText("2",575,200);
+
+        ctx.font = "30px LCD";
+        ctx.fillStyle = "#FFF";
+        ctx.fillText("[Enter to start]",260,400);
+
+        ctx.font = "15px LCD";
+        ctx.fillText(VERSION,10,20);
+    }
+
+    else if (screens[1]) {
+        ctx.fillStyle = "#777";
+        ctx.fillRect(0,0,WIDTH,HEIGHT);
+
         for(var i=0; i<Arrows.length; i++)
-            Arrows[i].update(Zombies);
+            Arrows[i].update();
         for(var j=0; j<Zombies.length; j++)
-            Zombies[j].update(Arrows);
+            Zombies[j].update();
+
+        player.update();
+        ctx.fillStyle = "#0FF";
+        ctx.fillRect(GROUND.x,GROUND.y,GROUND.width,GROUND.height);
+    }
+
+    else if (screens[2]) {
 
     }
-    else if(screens[1]){    //Main game
 
-    }
-    else if(screens[2]){    //Game over
-
-    }
-    else{
-        screens[0] = true;  //If it breaks, send ya to the title screen
-    }
     requestAnimationFrame(gameLoop);
 }
 
 function onKeyDown(key) {
     var keyCode = key.keyCode;
     console.log(keyCode);
-    if (keyCode == 32)
-        Arrows.push(new Arrow(5,100,100,1));
+    if (screens[0]) {
+        if(keyCode == 13) {
+            screens[0] = false;
+            screens[1] = true;
+        }
+    }
+
+    if (screens[1]) {
+        if (keyCode == 32 && !player.inShot) {
+            player.inShot = true;
+            player.shoot();
+        }
+        if (keyCode == 37 || keyCode == 65) {
+            player.dx = -5;
+        }
+        if (keyCode == 39 || keyCode == 68) {
+            player.dx = 5;
+        }
+    }
 }
 
 function onKeyUp(key) {
     var keyCode = key.keyCode;
+    if (screens[1]) {
+        if (keyCode == 32)
+            player.inShot = false;
+
+        if (keyCode == 37 || keyCode == 39 || keyCode == 65 || keyCode == 68) {
+            player.dx = 0;
+        }
+    }
 }
