@@ -15,7 +15,7 @@ function Player(xval, yval, width, height) {
         for (var i = Zombies.length - 1; i >= 0; i--) {
             if(isCollide(this,Zombies[i])){
                 this.takeDamage(Zombies[i].damage);
-                Zombies.splice[i,1];
+                Zombies[i].kill(i);
             }
         }
 

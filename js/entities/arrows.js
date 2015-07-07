@@ -10,15 +10,16 @@ function Arrow(xval, yval, damage, speed) {
         for (var i = Zombies.length - 1; i >= 0; i--) {
 
             if (isCollide(this, Zombies[i])) {
-                Zombies.splice[i, 1]; //Insta kills the zombie. Not what we want....
-                this.x = WIDTH+1;
-            }
-            else {
+                this.kill(i);
+            } else {
                 //ctx.drawImage(arrowImg, this.x, this.y);
                 this.x += this.speed;
                 ctx.fillStyle = "#000"
-                ctx.fillRect(this.x,this.y,this.width,this.height);
+                ctx.fillRect(this.x, this.y, this.width, this.height);
             }
         }
+    }
+    this.kill = function(i) {
+        Arrows.splice(i, 1);
     }
 }

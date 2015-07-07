@@ -12,12 +12,12 @@ function Zombie(xval, yval, width, height, health, speed, damage) {
 
             if (isCollide(this, Arrows[i])) {
                 this.takeDamage(Arrows[i].damage);
-                Arrows.splice(i,1);
             }
         }
 
         if (this.health < 1) {
-            this.x = WIDTH+1;
+            this.kill(i);
+            Zombies.push(new Zombie(WIDTH,450,50,100,10,1,5))
         } 
         else {
             this.x -= this.speed;
@@ -29,5 +29,8 @@ function Zombie(xval, yval, width, height, health, speed, damage) {
 
     this.takeDamage = function(damage) {
         this.health -= damage;
+    }
+    this.kill = function(i){
+        Zombies.splice(i,1);
     }
 }
