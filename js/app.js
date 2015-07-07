@@ -41,7 +41,7 @@ function init() {
     window.setInterval(function() {
         player.inShot = false;
     }, delay);
-
+    loadRandomMusic();
     document.body.appendChild(container);
     container.appendChild(canvas);
     canvas.style.cssText = "border: 1px solid black; width: " + WIDTH + "px; height: " + HEIGHT + "px;";
