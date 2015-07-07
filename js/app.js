@@ -38,6 +38,9 @@ function init() {
     //Event listeners
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
+    window.setInterval(function() {
+        player.inShot = false;
+    }, delay);
 
     document.body.appendChild(container);
     container.appendChild(canvas);
