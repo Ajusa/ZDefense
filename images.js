@@ -1,1 +1,1 @@
-//This is where we will load all of the images in
+//This is where we will load all of the images in.
