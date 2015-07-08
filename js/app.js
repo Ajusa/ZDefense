@@ -38,9 +38,6 @@ function init() {
     //Event listeners
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
-    window.setInterval(function() {
-        player.inShot = false;
-    }, delay);
     loadRandomMusic();
     document.body.appendChild(container);
     container.appendChild(canvas);
@@ -95,7 +92,6 @@ function gameLoop() {
 
 function onKeyDown(key) {
     var keyCode = key.keyCode;
-    console.log(keyCode);
     if (screens[0]) {
         if (keyCode == 13) {
             screens[0] = false;
@@ -107,8 +103,6 @@ function onKeyDown(key) {
         if (keyCode == 32 && !player.inShot) {
             player.shoot();
             player.inShot = true;
-            delay -= 100;
-            console.log("Shot" + delay)
 
         }
         if (keyCode == 37 || keyCode == 65) {
@@ -123,7 +117,11 @@ function onKeyDown(key) {
 function onKeyUp(key) {
     var keyCode = key.keyCode;
     if (screens[1]) {
+        if (keyCode == 32 && player.inShot) {
+            player.inShot = false;
+            //console.log("Shot" + delay)
 
+        }
 
         if (keyCode == 37 || keyCode == 39 || keyCode == 65 || keyCode == 68) {
             player.dx = 0;
