@@ -17,7 +17,7 @@ function Zombie(xval, yval, width, height, health, speed, damage) {
 
         if (this.health < 1) {
             this.kill(i);
-            Zombies.push(new Zombie(WIDTH,450,50,100,10,1,5))
+            //Zombies.push(new Zombie(WIDTH,450,50,100,10,1,5))
         } 
         else {
             this.x -= this.speed;

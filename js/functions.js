@@ -7,5 +7,12 @@ function isCollide(a, b) {
     );	//I copied this collide code for my game, hope ya don't mind -Jackson
 }
 function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max)) + min;
+}
+function createZombies(zombie){
+	var space = 0;
+	for (var i = 0; i < zombie.number; i++) {
+		Zombies.push(new Zombie(zombie.x + space, zombie.y,zombie.width, zombie.height, zombie.health, zombie.speed, zombie.damage));
+		space = space + 70;
+	};
 }

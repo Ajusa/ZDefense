@@ -12,10 +12,10 @@ var canvas = document.createElement('canvas'),
     ctx = canvas.getContext('2d'),
     container = document.createElement('div'),
     requestAnimationFrame = window.requestAnimationFrame ||
-                            window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame ||
-                            window.msRequestAnimationFrame;
-    
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame;
+
 var delay = 1000;
 var VERSION = "Alpha 0.1",
     WIDTH = 800,
@@ -26,9 +26,22 @@ var VERSION = "Alpha 0.1",
         width: WIDTH,
         height: 50
     };
-
+var level = [{
+    id: 0,
+    name: "The Easy One",
+    zombie: {
+        number: 10,
+        x: WIDTH,
+        y: 450,
+        width: 50,
+        height: 100,
+        health: 10,
+        speed: 1,
+        damage: 5,
+    }
+}]
 var Arrows = [],
-    Zombies = [new Zombie(WIDTH, 450, 50, 100, 10, 1, 5)],
+    Zombies = [],
     player = new Player(WIDTH / 2 - 25, 450, 50, 100),
     screens = [true, false, false],
     Damage = 1,
@@ -73,7 +86,9 @@ function gameLoop() {
     } else if (screens[1]) {
         ctx.fillStyle = "#777";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
+        if (Zombies.length == 0) {
+            createZombies(level[0].zombie);
+        };
         for (var i = 0; i < Arrows.length; i++)
             Arrows[i].update();
         for (var j = 0; j < Zombies.length; j++)
@@ -119,7 +134,6 @@ function onKeyUp(key) {
     if (screens[1]) {
         if (keyCode == 32 && player.inShot) {
             player.inShot = false;
-            //console.log("Shot" + delay)
 
         }
 
