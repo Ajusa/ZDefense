@@ -6,6 +6,7 @@ function Zombie(info, gap) {
     this.health = info.health;
     this.speed = info.speed;
     this.damage = info.damage;
+    this.value = info.value;
     //ctx.drawImage(zombieImg, xval, yval); Add this when we have images
     this.update = function() {
         for (var i = Arrows.length - 1; i >= 0; i--) {
@@ -31,6 +32,7 @@ function Zombie(info, gap) {
         this.health -= damage;
     }
     this.kill = function(i){
+        player.money += this.value;
         Zombies.splice(i,1);
     }
 }

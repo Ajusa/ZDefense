@@ -1,5 +1,5 @@
-var STARTING_MONEY;
-
+var STARTING_MONEY = 20;
+var STARTING_HEALTH = 10; //Hearts
 function Player(xval, yval, width, height) {
     //Note that all of those must be given some value on creation
     this.x = xval;
@@ -10,6 +10,7 @@ function Player(xval, yval, width, height) {
     this.height = height;
     this.money = STARTING_MONEY;
     this.inShot = false;
+    this.health = STARTING_HEALTH;
 
     this.update = function() {
         for (var i = Zombies.length - 1; i >= 0; i--) {

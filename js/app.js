@@ -20,12 +20,14 @@ var delay = 1000;
 var VERSION = "Alpha 0.1",
     WIDTH = 800,
     HEIGHT = 600,
+
     GROUND = {
         x: 0,
         y: HEIGHT - 50,
         width: WIDTH,
         height: 50
     };
+    levelNum = 0;
 var level = [{
     id: 0,
     name: "The Easy One",
@@ -38,6 +40,7 @@ var level = [{
         health: 10,
         speed: 1,
         damage: 5,
+        value: 10,
     }
 }]
 var Arrows = [],
@@ -66,7 +69,7 @@ function init() {
 function gameLoop() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-    if (screens[0]) {
+    if (screens[0]) { //Starting Screen
         ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -83,11 +86,16 @@ function gameLoop() {
 
         ctx.font = "15px LCD";
         ctx.fillText(VERSION, 10, 20);
-    } else if (screens[1]) {
+    } else if (screens[1]) { //Main Game
         ctx.fillStyle = "#777";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.font = "30px LCD";
+        ctx.fillStyle = "#FFF";
+        ctx.fillText(level[levelNum].name, 260, 300);
+        ctx.fillText("$" + player.money , 260, 200);
+        ctx.fillText(player.health + ' Hearts' , 260, 100);
         if (Zombies.length == 0) {
-            createZombies(level[0].zombie, 70);
+            createZombies(level[levelNum].zombie, 70);
         };
         for (var i = 0; i < Arrows.length; i++)
             Arrows[i].update();
@@ -95,11 +103,15 @@ function gameLoop() {
             Zombies[j].update();
 
         player.update();
-
         ctx.fillStyle = "#0FF";
         ctx.fillRect(GROUND.x, GROUND.y, GROUND.width, GROUND.height);
-    } else if (screens[2]) {
-
+    } else if (screens[2]) { //Game Over
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.font = "70px LCD";
+        ctx.fillStyle = "#F00";
+        ctx.fillText("Game Over", 150, 200);
+        pauseMusic();
     }
 
     requestAnimationFrame(gameLoop);
