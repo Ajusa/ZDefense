@@ -46,7 +46,7 @@ var Arrows = [],
     screens = [true, false, false],
     Damage = 1,
     Speed = 4;
-
+var time;
 function init() {
     //Event listeners
     window.addEventListener("keydown", onKeyDown);
@@ -59,7 +59,7 @@ function init() {
 
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-
+    time = Date.now(); //Current time for the delay
     requestAnimationFrame(gameLoop);
 }
 
@@ -87,7 +87,7 @@ function gameLoop() {
         ctx.fillStyle = "#777";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
         if (Zombies.length == 0) {
-            createZombies(level[0].zombie);
+            createZombies(level[0].zombie, 70);
         };
         for (var i = 0; i < Arrows.length; i++)
             Arrows[i].update();
@@ -107,6 +107,7 @@ function gameLoop() {
 
 function onKeyDown(key) {
     var keyCode = key.keyCode;
+
     if (screens[0]) {
         if (keyCode == 13) {
             screens[0] = false;
@@ -115,10 +116,10 @@ function onKeyDown(key) {
     }
 
     if (screens[1]) {
-        if (keyCode == 32 && !player.inShot) {
+        if (keyCode == 32 && !player.inShot && (Date.now()-time) > delay) { //This adds a delay
             player.shoot();
             player.inShot = true;
-
+            time = Date.now(); //This resets the delay after the shot
         }
         if (keyCode == 37 || keyCode == 65) {
             player.dx = -5;

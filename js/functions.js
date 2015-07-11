@@ -9,10 +9,11 @@ function isCollide(a, b) {
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max)) + min;
 }
-function createZombies(zombie){
-	var space = 0;
+function createZombies(zombie, gap){
+	var diff = gap;
+	var gap = 0;
 	for (var i = 0; i < zombie.number; i++) {
-		Zombies.push(new Zombie(zombie.x + space, zombie.y,zombie.width, zombie.height, zombie.health, zombie.speed, zombie.damage));
-		space = space + 70;
+		Zombies.push(new Zombie(zombie, gap));
+		gap = gap + diff;
 	};
 }
